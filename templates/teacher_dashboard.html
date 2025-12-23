@@ -33,8 +33,13 @@
         </div>
 
         <div style="margin-top: 2rem;">
-            <a href="{{ url_for('teacher.mark_attendance', class_id=class.id) }}" class="btn btn-primary btn-block">
+            <a href="{{ url_for('teacher.mark_attendance', class_id=class.id) }}"
+                class="btn btn-primary btn-block mb-3">
                 Mark Attendance <i class="fas fa-arrow-right" style="margin-left: auto;"></i>
+            </a>
+            <a href="{{ url_for('teacher.view_history', class_id=class.id) }}"
+                class="btn btn-outline-primary btn-block">
+                View History <i class="fas fa-history" style="margin-left: auto;"></i>
             </a>
         </div>
     </div>

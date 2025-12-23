@@ -3,3 +3,5 @@ Flask-SQLAlchemy
 Flask-Bcrypt
 psycopg2-binary
 gunicorn
+pandas
+openpyxl
