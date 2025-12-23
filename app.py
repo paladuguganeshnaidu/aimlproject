@@ -30,9 +30,11 @@ def create_app():
     app.register_blueprint(teacher_bp, url_prefix='/teacher')
     app.register_blueprint(student_bp, url_prefix='/student')
 
-    @app.route('/')
-    def index():
-        return redirect(url_for('auth.login_student')) # Default redirect
+    @app.route('/seed_db')
+    def seed_db():
+        from seed_data import seed_data
+        seed_data()
+        return "Database seeded successfully! You can now login with student1@mail.com / Student@123 or ds.teacher@mail.com / Teacher@123"
 
     with app.app_context():
         db.create_all()
