@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-6">
+    <div>
+        <h2>My Attendance</h2>
+        <p style="color: var(--text-muted);">Track your performance across all classes</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    {% for item in attendance_data %}
+    <div class="card">
+        <div class="flex-between mb-4">
+            <h3 style="font-size: 1.25rem;">{{ item.class_name }}</h3>
+            {% if item.warning %}
+            <span class="badge badge-danger">
+                <i class="fas fa-exclamation-triangle"></i> Low Attendance
+            </span>
+            {% else %}
+            <span class="badge badge-success">Good Standing</span>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <span
+                style="font-size: 2.5rem; font-weight: 700; color: {{ 'var(--danger)' if item.warning else 'var(--success)' }};">
+                {{ item.percentage }}%
+            </span>
+            <span style="color: var(--text-muted);">attendance</span>
+        </div>
+
+        <div class="progress-track" style="margin-bottom: 1.5rem;">
+            <div class="progress-fill"
+                style="width: {{ item.percentage }}%; background: {{ 'var(--danger)' if item.warning else 'var(--success)' }};">
+            </div>
+        </div>
+
+        <div
+            style="background: rgba(0,0,0,0.2); border-radius: 8px; padding: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div style="text-align: center; border-right: 1px solid rgba(255,255,255,0.05);">
+                <div style="font-size: 1.25rem; font-weight: 600;">{{ item.attended }}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Attended</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 1.25rem; font-weight: 600;">{{ item.total_classes }}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Total Classes</div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+        <div
+            style="background: rgba(255, 255, 255, 0.05); width: 80px; height: 80px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <i class="fas fa-clipboard-list" style="font-size: 2rem; color: var(--text-muted);"></i>
+        </div>
+        <h3>No Enrollment Records</h3>
+        <p style="color: var(--text-muted);">You haven't been enrolled in any classes yet.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

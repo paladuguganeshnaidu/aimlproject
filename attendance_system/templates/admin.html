@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-6">
+    <div>
+        <h2>Admin Console</h2>
+        <p style="color: var(--text-muted);">System administration and enrollment</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <!-- User Management -->
+    <div class="card">
+        <h3 class="mb-4"><i class="fas fa-user-plus text-primary"></i> Create User</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="add_user">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" required placeholder="user@school.com">
+            </div>
+            <div class="grid grid-2" style="gap: 1rem;">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required placeholder="••••••">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="role">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create User</button>
+        </form>
+    </div>
+
+    <!-- Class Management -->
+    <div>
+        <div class="card mb-6">
+            <h3 class="mb-4"><i class="fas fa-chalkboard text-warning"></i> Create Class</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="add_class">
+                <div class="form-group">
+                    <label>Class Name</label>
+                    <input type="text" name="class_name" required placeholder="e.g. Mathematics 101">
+                </div>
+                <div class="form-group">
+                    <label>Assign Teacher</label>
+                    <select name="teacher_id" required>
+                        {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create Class</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="mb-4"><i class="fas fa-link text-success"></i> Enroll Student</h3>
+            <form method="POST">
+                <input type="hidden" name="action" value="assign_student">
+                <div class="form-group">
+                    <label>Select Student</label>
+                    <select name="student_id" required>
+                        {% for student in students %}
+                        <option value="{{ student.id }}">{{ student.name }} ({{ student.email }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Class</label>
+                    <select name="class_id" required>
+                        {% for cls in classes %}
+                        <option value="{{ cls.id }}">{{ cls.class_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Enroll User</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

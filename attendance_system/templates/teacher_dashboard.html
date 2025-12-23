@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex-between mb-6">
+    <div>
+        <h2>Dashboard</h2>
+        <p style="color: var(--text-muted);">Manage your classes and attendance</p>
+    </div>
+    <div class="card" style="padding: 0.5rem 1rem; display: flex; gap: 1rem; align-items: center;">
+        <i class="fas fa-calendar-alt text-primary"></i>
+        <span>{{ today }}</span>
+    </div>
+</div>
+
+<div class="grid grid-3">
+    {% for class in classes %}
+    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <div class="flex-between mb-4">
+                <div
+                    style="background: rgba(99, 102, 241, 0.1); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-book text-primary"></i>
+                </div>
+                <span class="badge badge-success">Active</span>
+            </div>
+            <h3>{{ class.class_name }}</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+                <i class="fas fa-users" style="margin-right: 0.5rem;"></i> {{ class.enrollments|length }} Students
+                Enrolled
+            </p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="{{ url_for('teacher.mark_attendance', class_id=class.id) }}" class="btn btn-primary btn-block">
+                Mark Attendance <i class="fas fa-arrow-right" style="margin-left: auto;"></i>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+        <div
+            style="background: rgba(255, 255, 255, 0.05); width: 80px; height: 80px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+            <i class="fas fa-folder-open" style="font-size: 2rem; color: var(--text-muted);"></i>
+        </div>
+        <h3>No Classes Assigned</h3>
+        <p style="color: var(--text-muted);">Contact the administrator to get assigned to classes.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
